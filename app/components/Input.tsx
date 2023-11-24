@@ -19,13 +19,11 @@ const Input = ({
   disabled = false,
 }: Input) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<any>(null);
 
   useEffect(() => {
-    const handleClickOutside = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (e: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
       }
     };

@@ -23,18 +23,16 @@ export default function Home() {
 
   const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstInputValue(parseFloat(e.target.value).toFixed(2));
-    setSecondInputValue(Math.floor(e.target.value * ratioAToB).toFixed(2));
+    setSecondInputValue(
+      Math.floor(parseFloat(e.target.value) * ratioAToB).toFixed(2),
+    );
   };
 
-  const handleFirstDropDown = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleFirstDropDown = (e: any) => {
     setFirstSelectedItem(e.target.textContent);
   };
 
-  const handleSecondDropDown = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleSecondDropDown = (e: any) => {
     setSecondSelectedItem(e.target.textContent);
   };
 
