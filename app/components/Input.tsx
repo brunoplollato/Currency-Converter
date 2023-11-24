@@ -3,11 +3,11 @@ import React, { useState } from "react";
 
 interface Input {
   value: string;
-  onChange: () => void;
+  onChange: (e: any) => void;
   dropdownItems: string[];
   selectedItem: string;
-  onDropdownChange: () => void;
-  disabled: boolean;
+  onDropdownChange: (e: any) => void;
+  disabled?: boolean;
 }
 
 const Input = ({

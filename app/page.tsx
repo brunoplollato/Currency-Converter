@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-// @ts-ignore
 import Freecurrencyapi from "@everapi/freecurrencyapi-js";
 import Input from "./components/Input";
 import Swap from "./components/Swap";
@@ -23,30 +22,31 @@ export default function Home() {
     setSecondSelectedItem(tempSelectedItem);
   };
 
-  const handleFirstInputChange = (e) => {
+  const handleFirstInputChange = (e: any) => {
     setFirstInputValue(parseFloat(e.target.value).toFixed(2));
     setSecondInputValue(Math.floor(e.target.value * ratioAToB).toFixed(2));
   };
 
-  const handleFirstDropDown = (e) => {
+  const handleFirstDropDown = (e: any) => {
     setFirstSelectedItem(e.target.textContent);
   };
 
-  const handleSecondDropDown = (e) => {
+  const handleSecondDropDown = (e: any) => {
     setSecondSelectedItem(e.target.textContent);
   };
 
   useMemo(() => {
     try {
-      freecurrencyapi.currencies().then(({ data }) => {
-        Object?.entries(data)?.map((item) => {
+      freecurrencyapi.currencies().then(({ data }: any) => {
+        Object?.entries(data).map((item: any) => {
+          // @ts-ignore
           if (!dropdownItems.includes(item[0])) dropdownItems.push(item[0]);
         });
       });
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [dropdownItems, freecurrencyapi]);
 
   useEffect(() => {
     freecurrencyapi
@@ -54,11 +54,11 @@ export default function Home() {
         base_currency: firstSelectedItem,
         currencies: secondSelectedItem,
       })
-      .then((response) => {
+      .then((response: any) => {
         setRatioAToB(response.data[secondSelectedItem]);
         setSecondInputValue(
           Math.floor(
-            firstInputValue * response.data[secondSelectedItem],
+            parseFloat(firstInputValue) * response.data[secondSelectedItem],
           ).toFixed(2),
         );
       });
