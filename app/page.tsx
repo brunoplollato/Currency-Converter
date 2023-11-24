@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+// @ts-ignore
 import Freecurrencyapi from "@everapi/freecurrencyapi-js";
 import Image from "next/image";
 import Input from "./components/Input";

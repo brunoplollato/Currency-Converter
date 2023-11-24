@@ -50,6 +50,10 @@
     "npm run test": {
       "name": "test",
       "command": "npm run test"
+    },
+    "npm install --save-dev @types/everapi__freecurrencyapi-js": {
+      "name": "npm i --save-dev @types/everapi__freecurrencyapi-js",
+      "command": "npm install --save-dev @types/everapi__freecurrencyapi-js"
     }
   }
 }
