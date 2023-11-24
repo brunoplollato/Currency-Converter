@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import Freecurrencyapi from "@everapi/freecurrencyapi-js" as any;
+import Freecurrencyapi as any from "@everapi/freecurrencyapi-js";
 import Input from "./components/Input";
 import Swap from "./components/Swap";
 
