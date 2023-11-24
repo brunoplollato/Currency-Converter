@@ -11,9 +11,7 @@ export default function Home() {
   const [firstSelectedItem, setFirstSelectedItem] = useState("USD");
   const [secondSelectedItem, setSecondSelectedItem] = useState("BRL");
   const [ratioAToB, setRatioAToB] = useState(1);
-  const freecurrencyapi = new Freecurrencyapi(
-    "fca_live_2BfamgkCKYkUwdVQfWvgtpfFfhLzy6EDcfzhYKFZ",
-  );
+  const freecurrencyapi = new Freecurrencyapi(process.env.API_KEY);
 
   const handleSwap = () => {
     const tempSelectedItem = firstSelectedItem;
