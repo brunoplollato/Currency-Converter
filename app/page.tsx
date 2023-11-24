@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import Freecurrencyapi from "@everapi/freecurrencyapi-js";
+import Freecurrencyapi from "@everapi/freecurrencyapi-js" as any;
 import Input from "./components/Input";
 import Swap from "./components/Swap";
 
@@ -11,7 +11,6 @@ export default function Home() {
   const [firstSelectedItem, setFirstSelectedItem] = useState("USD");
   const [secondSelectedItem, setSecondSelectedItem] = useState("BRL");
   const [ratioAToB, setRatioAToB] = useState(1);
-  const [ratioBToA, setRatioBToA] = useState(1);
   const freecurrencyapi = new Freecurrencyapi(
     "fca_live_2BfamgkCKYkUwdVQfWvgtpfFfhLzy6EDcfzhYKFZ",
   );
@@ -22,26 +21,32 @@ export default function Home() {
     setSecondSelectedItem(tempSelectedItem);
   };
 
-  const handleFirstInputChange = (e: any) => {
+  const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstInputValue(parseFloat(e.target.value).toFixed(2));
     setSecondInputValue(Math.floor(e.target.value * ratioAToB).toFixed(2));
   };
 
-  const handleFirstDropDown = (e: any) => {
+  const handleFirstDropDown = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     setFirstSelectedItem(e.target.textContent);
   };
 
-  const handleSecondDropDown = (e: any) => {
+  const handleSecondDropDown = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     setSecondSelectedItem(e.target.textContent);
   };
 
   useMemo(() => {
     try {
       freecurrencyapi.currencies().then(({ data }: any) => {
-        Object?.entries(data).map((item: any) => {
-          // @ts-ignore
-          if (!dropdownItems.includes(item[0])) dropdownItems.push(item[0]);
-        });
+        if (data) {
+          Object?.entries(data).map((item: any) => {
+            // @ts-ignore
+            if (!dropdownItems.includes(item[0])) dropdownItems.push(item[0]);
+          });
+        }
       });
     } catch (error) {
       console.error(error);
@@ -49,20 +54,24 @@ export default function Home() {
   }, [dropdownItems, freecurrencyapi]);
 
   useEffect(() => {
-    freecurrencyapi
-      .latest({
-        base_currency: firstSelectedItem,
-        currencies: secondSelectedItem,
-      })
-      .then((response: any) => {
-        setRatioAToB(response.data[secondSelectedItem]);
-        setSecondInputValue(
-          Math.floor(
-            parseFloat(firstInputValue) * response.data[secondSelectedItem],
-          ).toFixed(2),
-        );
-      });
-  }, [firstSelectedItem, secondSelectedItem]);
+    try {
+      freecurrencyapi
+        .latest({
+          base_currency: firstSelectedItem,
+          currencies: secondSelectedItem,
+        })
+        .then(({ data }: any) => {
+          setRatioAToB(data[secondSelectedItem]);
+          setSecondInputValue(
+            Math.floor(
+              parseFloat(firstInputValue) * data[secondSelectedItem],
+            ).toFixed(2),
+          );
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [firstSelectedItem, secondSelectedItem, freecurrencyapi]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-24">
