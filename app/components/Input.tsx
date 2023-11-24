@@ -22,7 +22,9 @@ const Input = ({
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
